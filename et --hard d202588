@@ -1,0 +1,78 @@
+[33mcommit b32c426fa3a0ff43d47dc03d3b0ce2b41c699302[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Merge: 6d880de 81dd1bd
+Author: Shubham Vishwakarma <152500251+isham600@users.noreply.github.com>
+Date:   Wed Oct 23 17:59:09 2024 +0530
+
+    Merge pull request #4 from isham600/manage-clients
+    
+    implemented the all changes in invoice
+
+[33mcommit 6d880deffb23c56dd6f99eeadd680f9407a8e4e8[m
+Merge: d202588 4637fc1
+Author: Shubham Vishwakarma <152500251+isham600@users.noreply.github.com>
+Date:   Wed Oct 23 17:56:49 2024 +0530
+
+    Merge pull request #3 from isham600/feature/implement-sms-api
+    
+    Feature/implement sms api
+
+[33mcommit 4637fc123794386ad88fdfd403bb4f84decea2b8[m
+Merge: ce5fd1a d202588
+Author: Shubham Vishwakarma <152500251+isham600@users.noreply.github.com>
+Date:   Wed Oct 23 17:56:37 2024 +0530
+
+    Merge branch 'main' into feature/implement-sms-api
+
+[33mcommit ce5fd1ad3a42deb2a2516e18593d625c74e652b8[m
+Author: Vinesh19 <vineshwadhwani2000@gmail.com>
+Date:   Wed Oct 23 17:36:09 2024 +0530
+
+    Added SMS API
+
+[33mcommit 81dd1bd85b05556bead5e30ab73dee9534903b30[m
+Author: aditi raghuwanshi <aditi.raghuwanshi430@nmims.edu.in>
+Date:   Wed Oct 23 17:11:33 2024 +0530
+
+    implemented the all changes in invoice
+
+[33mcommit d202588cd40d4e22daaa0d3c71c9922f7c9c3143[m
+Merge: 4e7d9e5 17f354e
+Author: Shubham Vishwakarma <152500251+isham600@users.noreply.github.com>
+Date:   Tue Oct 22 20:19:29 2024 +0530
+
+    Merge pull request #2 from isham600/manage-clients
+    
+    completed invoice and manage-clients
+
+[33mcommit 17f354ecacab7d4aca05301c230d3fccc500597f[m
+Author: aditi raghuwanshi <aditi.raghuwanshi430@nmims.edu.in>
+Date:   Tue Oct 22 18:18:57 2024 +0530
+
+    completed invoice and manage-clients
+
+[33mcommit 4e7d9e57200313f2d5e8cead5c602a563474f5a6[m
+Merge: 9716329 c61b821
+Author: Shubham Vishwakarma <152500251+isham600@users.noreply.github.com>
+Date:   Tue Oct 22 13:56:19 2024 +0530
+
+    Merge pull request #1 from isham600/manage-clients
+    
+    Implemented manage-clients
+
+[33mcommit c61b8213d4239226756dbb3de9abb338501961ee[m
+Author: aditi raghuwanshi <aditi.raghuwanshi430@nmims.edu.in>
+Date:   Tue Oct 22 13:16:35 2024 +0530
+
+    Implemented manage-clients
+
+[33mcommit 5bae28a535c9fdeb09dd721fc06819ae863b54eb[m
+Author: Vinesh19 <vineshwadhwani2000@gmail.com>
+Date:   Mon Oct 21 19:36:43 2024 +0530
+
+    [Feature]: Implemented Dropdown search in contact template
+
+[33mcommit 9716329ced0ce0d347e3730c545164b3de8d2249[m
+Author: isham600 <shubham.webstudio@gmail.com>
+Date:   Mon Oct 21 12:19:06 2024 +0530
+
+    Initial commit of Purat Project by shubham sir

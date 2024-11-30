@@ -1,0 +1,14 @@
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 100px; /* Adjust this to match your header height */
+   
+  }
+ 
+
+  @media (max-width: 768px) { 
+    .sidebar {
+      width: 80px;
+      top: 50px;
+    }
+  }

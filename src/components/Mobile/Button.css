@@ -1,0 +1,56 @@
+.custom-button {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px; /* Adjust padding as necessary */
+    font-size: 14px; /* Adjust font size as necessary */
+    color: #008cba; /* The color from the image */
+    text-decoration: none;
+    border: none; /* Remove border */
+    background: none; /* Remove background */
+    cursor: pointer; /* Add cursor pointer */
+    transition: color 0.3s;
+  }
+  
+  .custom-button:hover {
+    color: #005f8a; /* Darker shade for hover effect */
+  }
+  
+  .button-icon {
+    margin-right: 5px; /* Adjust spacing between icon and text */
+    font-size: 16px; /* Adjust icon size as necessary */
+  }
+  
+  .carousel-item button {
+    /* Remove default button styling */
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: center;
+    color: blue; /* Or your desired color */
+    font-weight: bold; /* Optional, for a bolder text */
+    cursor: pointer;
+  }
+  
+  .carousel-item button::before {
+    /* Create the top horizontal line */
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: blue; /* Or your desired color */
+    transform: translateY(-50%);
+  }
+  
+  .carousel-item button::after {
+    /* Create the bottom horizontal line */
+    content: '';
+    position: absolute;
+    bottom: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: blue; /* Or your desired color */
+    transform: translateY(50%);
+  }
