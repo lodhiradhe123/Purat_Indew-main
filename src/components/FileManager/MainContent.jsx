@@ -18,12 +18,6 @@ const MainContent = ({
   const [fileToDelete, setFileToDelete] = useState(null); // State to track the file selected for deletion
   console.log(files);
   console.log(filesImagefn);
-  // filesImagefn?.forEach((file) => {
-  //   if (file.media) {
-  //     // Render files with media
-  //     // console.log("File with media:", file.media);
-  //   }
-  // });
 
   // Function to open the file viewer
   const openFolderHandler = (id) => {
@@ -32,23 +26,55 @@ const MainContent = ({
 
   // Function to confirm deletion of the selected file
   const handleDeleteConfirm = async () => {
-    try {
-      const response = await axios.post(
-        "https://service2.nuke.co.in/api/file-folders",
-        {
-          action: " delete",
-          username: "rahul1011",
-          id: fileToDelete.toString(),
-        },
-        {
-          headers: {
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMDIxMzQ0M2I4NjBiNTRlZWRlMjhjY2VlMGZmZWVkYWRiZWMzNmRjN2E5OThlZWIyZDExYTlkNDZmZWE0NTFlNzVlN2ZlYjZmZDYxNzg1OGEiLCJpYXQiOjE3MzE0ODc5MTAuODU4MjQ0LCJuYmYiOjE3MzE0ODc5MTAuODU4MjUxLCJleHAiOjE3NjMwMjM5MTAuODQ5OTM1LCJzdWIiOiI2OSIsInNjb3BlcyI6W119.g78aoi0_Kr-7MDl0Bu6eNVmUh2MJsOPwCn5NrEwvSuINeUH9rKCjIPDk7GP-du6ivym-WfjCg2RJmCu_YuIPzkRcRZJTvHe9da6zIeE8DZKqFzxZ1HCHe4P68NlWmRkiVfe8Rwvaxz8sgl4QK9VfAnS9cH8qNjth0r87lH7DtR9b1QvY_QpcgllR0HyMDjBaH7KUJzL10oTiOhMpYIJzUj_qqKhNs9P13FUMLsCgu193tU89Ir2ti3QPm4AA-GJX9SP5yAHRdhCw_5SnaX9BxWP2NDLejts_klQDFb1LZ8tWFKfh8wIllUrPeexQGj0ewPeBLyn64PK4DfSnpGXVxQnWypctvbH4ouWVHMt2vY0V6j5QWIjIe_KCR3229CwEfnC3ULRZVClYRHszfs_B5Jl4nmhO-5lgZ9LRbiMERk5pn7i8Y9DOjToirtCJJPef4l11fdGBk_fru1LKCs1i2h16wehQW1GbwZWSo3SKLkq9elmw6lyJLyrAX3mJgVjs4jv9YpAfk0eShKUIqE3i8TlIvLwZIOrradpSBDbqBD9YUzMadPqwfMU_2afYCbMtS24jNqdWZf6A102LOAbL4N8zINQfoNmsQScje2_NzCtybTveuhZDmHe6FVDVBgGtMjsXbAxMKvbItxrlwYdHVKDRkwD0ERWbiWoK3p7qQU0`,
-            "Content-Type": "application/json",
+    const fileApi = "https://service2.nuke.co.in/api/file-managers";
+    const folderApi = "https://service2.nuke.co.in/api/file-folders";
+    const token = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMDIxMzQ0M2I4NjBiNTRlZWRlMjhjY2VlMGZmZWVkYWRiZWMzNmRjN2E5OThlZWIyZDExYTlkNDZmZWE0NTFlNzVlN2ZlYjZmZDYxNzg1OGEiLCJpYXQiOjE3MzE0ODc5MTAuODU4MjQ0LCJuYmYiOjE3MzE0ODc5MTAuODU4MjUxLCJleHAiOjE3NjMwMjM5MTAuODQ5OTM1LCJzdWIiOiI2OSIsInNjb3BlcyI6W119.g78aoi0_Kr-7MDl0Bu6eNVmUh2MJsOPwCn5NrEwvSuINeUH9rKCjIPDk7GP-du6ivym-WfjCg2RJmCu_YuIPzkRcRZJTvHe9da6zIeE8DZKqFzxZ1HCHe4P68NlWmRkiVfe8Rwvaxz8sgl4QK9VfAnS9cH8qNjth0r87lH7DtR9b1QvY_QpcgllR0HyMDjBaH7KUJzL10oTiOhMpYIJzUj_qqKhNs9P13FUMLsCgu193tU89Ir2ti3QPm4AA-GJX9SP5yAHRdhCw_5SnaX9BxWP2NDLejts_klQDFb1LZ8tWFKfh8wIllUrPeexQGj0ewPeBLyn64PK4DfSnpGXVxQnWypctvbH4ouWVHMt2vY0V6j5QWIjIe_KCR3229CwEfnC3ULRZVClYRHszfs_B5Jl4nmhO-5lgZ9LRbiMERk5pn7i8Y9DOjToirtCJJPef4l11fdGBk_fru1LKCs1i2h16wehQW1GbwZWSo3SKLkq9elmw6lyJLyrAX3mJgVjs4jv9YpAfk0eShKUIqE3i8TlIvLwZIOrradpSBDbqBD9YUzMadPqwfMU_2afYCbMtS24jNqdWZf6A102LOAbL4N8zINQfoNmsQScje2_NzCtybTveuhZDmHe6FVDVBgGtMjsXbAxMKvbItxrlwYdHVKDRkwD0ERWbiWoK3p7qQU0`;
+    const a =
+      fileToDelete.media_type == "image/jpeg" ||
+      fileToDelete.media_type == "image/png" ||
+      fileToDelete.media_type == "application/pdf" ||
+      fileToDelete.media_type == "video/mp4";
+    console.log(a);
+    console.log(fileToDelete.id);
+    if (a === true) {
+      try {
+        const response = await axios.post(
+          fileApi,
+          {
+            action: " delete",
+            username: "rahul1011",
+            id: fileToDelete.id,
           },
-        }
-      );
-    } catch (error) {
-      console.log(error);
+          {
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }else{
+      try {
+        const response = await axios.post(
+          folderApi,
+          {
+            action: " delete",
+            username: "rahul1011",
+            id: fileToDelete.toString(),
+          },
+          {
+            headers: {
+              Authorization: token,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+  
     }
 
     onDeleteFile(fileToDelete); // Call the parent function to delete the file
@@ -112,8 +138,8 @@ const MainContent = ({
                     <td className="p-2">
                       {/* Delete button with confirmation modal trigger */}
                       <button
-                        className="text-red-600 hover:text-red-800 mr-2"
-                        onClick={() => setFileToDelete(file.id)}
+                        className="text-yellow-600 hover:text-red-800 mr-2"
+                        onClick={() => setFileToDelete(file)}
                       >
                         <FiTrash />
                       </button>
@@ -203,7 +229,7 @@ const MainContent = ({
             filesImagefn.length !== 0 ? (
               filesImagefn.map((file) => (
                 <div
-                  className="flex w-36 flex-col items-start justify-start p-4 rounded cursor-pointer "
+                  className="flex w-36 flex-col items-start justify-start p-4 rounded cursor-pointer overflow-hidden "
                   onClick={() => window.open(file.media, "_blank")}
                 >
                   {file.media_type == "image" ||
@@ -212,7 +238,7 @@ const MainContent = ({
                     <img
                       src={file.media}
                       alt="No files"
-                      className="w-32 h-32 mb-2"
+                      className="w-32 h-32 mb-2 rounded-md"
                     />
                   ) : file.media_type == "application/pdf" ? (
                     <FaFilePdf className="w-32 h-32" />
@@ -220,7 +246,9 @@ const MainContent = ({
                     <TbArrowsRandom className="w-32 h-32" />
                   )}
 
-                  <p className="text-gray-700 text-sm">{file.media_name}</p>
+                  <p className="text-gray-700 text-sm font-mono">
+                    {file.media_name}
+                  </p>
                 </div>
               ))
             ) : (
