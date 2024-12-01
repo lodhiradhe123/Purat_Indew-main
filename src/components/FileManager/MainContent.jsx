@@ -14,6 +14,8 @@ const MainContent = ({
   onFolderClick,
   onDeleteFile,
   onEditFile,
+  refrshFolder,
+  updateCurrentFolderContents,
 }) => {
   const [fileToDelete, setFileToDelete] = useState(null); // State to track the file selected for deletion
   console.log(files);
@@ -25,6 +27,8 @@ const MainContent = ({
   };
 
   // Function to confirm deletion of the selected file
+
+  
   const handleDeleteConfirm = async () => {
     const fileApi = "https://service2.nuke.co.in/api/file-managers";
     const folderApi = "https://service2.nuke.co.in/api/file-folders";
@@ -52,6 +56,7 @@ const MainContent = ({
             },
           }
         );
+
       } catch (error) {
         console.log(error);
       }
@@ -79,7 +84,14 @@ const MainContent = ({
 
     onDeleteFile(fileToDelete); // Call the parent function to delete the file
     setFileToDelete(null); // Reset the fileToDelete state to close the modal
+    // location.reload();
   };
+
+  // useEffect 
+  // useEffect(() => {
+  //   handleDeleteConfirm()
+
+  // },[filesImagefn,files])
 
   // Function to cancel the deletion operation
   const handleDeleteCancel = () => {

@@ -41,7 +41,7 @@ const FileManager = () => {
     setView(viewType);
   };
 
-  const handleCreateFolder = (folderName, folderId = null) => {
+  const handleCreateFolder = async (folderName, folderId = null) => {
     if (folderId) {
       // Editing an existing folder
       const updatedContents = getCurrentFolderContents().map((file) =>
@@ -50,14 +50,34 @@ const FileManager = () => {
       updateCurrentFolderContents(updatedContents);
     } else {
       // Creating a new folder
-      const newFolder = {
-        id: Date.now(),
-        name: folderName,
-        type: "folder",
-        icon: "/assets/images/png/blue-folder-13669.png",
-        contents: [],
-      };
-      updateCurrentFolderContents([...getCurrentFolderContents(), newFolder]);
+      try {
+        const response = await axios.post(
+          "https://service2.nuke.co.in/api/file-folders",
+          {
+            action: "create",
+            username: "rahul1011",
+            folder_name: folderName,
+          },
+          {
+            headers: {
+              Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMDIxMzQ0M2I4NjBiNTRlZWRlMjhjY2VlMGZmZWVkYWRiZWMzNmRjN2E5OThlZWIyZDExYTlkNDZmZWE0NTFlNzVlN2ZlYjZmZDYxNzg1OGEiLCJpYXQiOjE3MzE0ODc5MTAuODU4MjQ0LCJuYmYiOjE3MzE0ODc5MTAuODU4MjUxLCJleHAiOjE3NjMwMjM5MTAuODQ5OTM1LCJzdWIiOiI2OSIsInNjb3BlcyI6W119.g78aoi0_Kr-7MDl0Bu6eNVmUh2MJsOPwCn5NrEwvSuINeUH9rKCjIPDk7GP-du6ivym-WfjCg2RJmCu_YuIPzkRcRZJTvHe9da6zIeE8DZKqFzxZ1HCHe4P68NlWmRkiVfe8Rwvaxz8sgl4QK9VfAnS9cH8qNjth0r87lH7DtR9b1QvY_QpcgllR0HyMDjBaH7KUJzL10oTiOhMpYIJzUj_qqKhNs9P13FUMLsCgu193tU89Ir2ti3QPm4AA-GJX9SP5yAHRdhCw_5SnaX9BxWP2NDLejts_klQDFb1LZ8tWFKfh8wIllUrPeexQGj0ewPeBLyn64PK4DfSnpGXVxQnWypctvbH4ouWVHMt2vY0V6j5QWIjIe_KCR3229CwEfnC3ULRZVClYRHszfs_B5Jl4nmhO-5lgZ9LRbiMERk5pn7i8Y9DOjToirtCJJPef4l11fdGBk_fru1LKCs1i2h16wehQW1GbwZWSo3SKLkq9elmw6lyJLyrAX3mJgVjs4jv9YpAfk0eShKUIqE3i8TlIvLwZIOrradpSBDbqBD9YUzMadPqwfMU_2afYCbMtS24jNqdWZf6A102LOAbL4N8zINQfoNmsQScje2_NzCtybTveuhZDmHe6FVDVBgGtMjsXbAxMKvbItxrlwYdHVKDRkwD0ERWbiWoK3p7qQU0`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const folder = response.data.data;
+        const newFolder = {
+          id: folder.id,
+          name: folder.folder_name,
+          type: "folder",
+          icon: "/assets/images/png/blue-folder-13669.png",
+          contents: [],
+        };
+        updateCurrentFolderContents([...getCurrentFolderContents(), newFolder]);
+        console.log(newFolder);
+      } catch (error) {
+        console.log(error.mesage);
+      }
     }
     setFolderModalOpen(false);
   };
@@ -66,16 +86,16 @@ const FileManager = () => {
     console.log(file);
 
     const formData = new FormData();
-    formData.append("action", "create")
-    formData.append("username", "rahul1011")
-    formData.append("folder", openFolderId)
-    formData.append("media", file.file)
-    formData.append("media_type", file.type)
-    formData.append("media_name", file.name)
+    formData.append("action", "create");
+    formData.append("username", "rahul1011");
+    formData.append("folder", openFolderId);
+    formData.append("media", file.file);
+    formData.append("media_type", file.type);
+    formData.append("media_name", file.name);
     try {
       const response = await axios.post(
         "https://service2.nuke.co.in/api/file-managers",
-        
+
         formData,
         {
           headers: {
@@ -84,17 +104,18 @@ const FileManager = () => {
         }
       );
       console.log(response);
+      const newFileData =response.data.data;
+      const newFile = {
+        id: newFileData.id,
+        name: newFileData.media_name,
+        type: newFileData.media_type,
+        icon: "/assets/images/png/file.png",
+      };
+      updateCurrentFolderContents([...getCurrentFolderContents(), newFile]);
     } catch (error) {
       console.log(error.message);
     }
 
-    // const newFile = {
-    //   id: Date.now(),
-    //   name: file.name,
-    //   type: file.type,
-    //   icon: "/assets/images/png/file.png",
-    // };
-    // updateCurrentFolderContents([...getCurrentFolderContents(), newFile]);
     setFileUploadModalOpen(false);
   };
 
@@ -144,14 +165,11 @@ const FileManager = () => {
       setFilesImage(...images);
       // console.log(filesImage);
       setCurrentPath((prevpath) => [...prevpath, folder.name]);
-      // updateCurrentFolderContents([...getCurrentFolderContents(), currentPath]);
+      updateCurrentFolderContents([...getCurrentFolderContents(), currentPath]);
     } catch (error) {
       console.log("Found an error");
     }
   };
-
-  // console.log(filesImage[0].images[0].media);
-  // console.log(filesImage);
 
   const handleBreadcrumbClick = (index) => {
     setCurrentPath(currentPath.slice(0, index));
