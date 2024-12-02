@@ -22,6 +22,7 @@ const FileManager = () => {
   const [folderToEdit, setFolderToEdit] = useState(null);
   const [isFileUploadModalOpen, setFileUploadModalOpen] = useState(false);
   const [openFolderId, setOpenFolderId] = useState();
+  const [load, setLoad] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
@@ -104,14 +105,17 @@ const FileManager = () => {
         }
       );
       console.log(response);
-      const newFileData =response.data.data;
+      const newFileData = response.data.data;
       const newFile = {
         id: newFileData.id,
         name: newFileData.media_name,
         type: newFileData.media_type,
         icon: "/assets/images/png/file.png",
       };
-      updateCurrentFolderContents([...getCurrentFolderContents(), newFile]);
+      toast.success(" File added successfully");
+      // alert("File added successfully");
+      setLoad(true);
+      // updateCurrentFolderContents([...getCurrentFolderContents(), newFile]);
     } catch (error) {
       console.log(error.message);
     }
@@ -120,9 +124,11 @@ const FileManager = () => {
   };
 
   const handleDeleteFile = (id) => {
+    console.log(id);
     const updatedContents = getCurrentFolderContents().filter(
       (file) => file.id !== id
     );
+    setLoad(true);
     updateCurrentFolderContents(updatedContents);
   };
 
@@ -138,8 +144,41 @@ const FileManager = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(openFolderId);
+    const fetchFiles = async () => {
+      try {
+        const response = await axios.post(
+          "https://service2.nuke.co.in/api/file-folders",
+          {
+            action: "readSpecific",
+            username: "rahul1011",
+            id: openFolderId.toString(),
+          },
+          {
+            headers: {
+              Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMDIxMzQ0M2I4NjBiNTRlZWRlMjhjY2VlMGZmZWVkYWRiZWMzNmRjN2E5OThlZWIyZDExYTlkNDZmZWE0NTFlNzVlN2ZlYjZmZDYxNzg1OGEiLCJpYXQiOjE3MzE0ODc5MTAuODU4MjQ0LCJuYmYiOjE3MzE0ODc5MTAuODU4MjUxLCJleHAiOjE3NjMwMjM5MTAuODQ5OTM1LCJzdWIiOiI2OSIsInNjb3BlcyI6W119.g78aoi0_Kr-7MDl0Bu6eNVmUh2MJsOPwCn5NrEwvSuINeUH9rKCjIPDk7GP-du6ivym-WfjCg2RJmCu_YuIPzkRcRZJTvHe9da6zIeE8DZKqFzxZ1HCHe4P68NlWmRkiVfe8Rwvaxz8sgl4QK9VfAnS9cH8qNjth0r87lH7DtR9b1QvY_QpcgllR0HyMDjBaH7KUJzL10oTiOhMpYIJzUj_qqKhNs9P13FUMLsCgu193tU89Ir2ti3QPm4AA-GJX9SP5yAHRdhCw_5SnaX9BxWP2NDLejts_klQDFb1LZ8tWFKfh8wIllUrPeexQGj0ewPeBLyn64PK4DfSnpGXVxQnWypctvbH4ouWVHMt2vY0V6j5QWIjIe_KCR3229CwEfnC3ULRZVClYRHszfs_B5Jl4nmhO-5lgZ9LRbiMERk5pn7i8Y9DOjToirtCJJPef4l11fdGBk_fru1LKCs1i2h16wehQW1GbwZWSo3SKLkq9elmw6lyJLyrAX3mJgVjs4jv9YpAfk0eShKUIqE3i8TlIvLwZIOrradpSBDbqBD9YUzMadPqwfMU_2afYCbMtS24jNqdWZf6A102LOAbL4N8zINQfoNmsQScje2_NzCtybTveuhZDmHe6FVDVBgGtMjsXbAxMKvbItxrlwYdHVKDRkwD0ERWbiWoK3p7qQU0`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setLoad(false)
+        console.log(response.data.data);
+        const images = response.data.data.map((image) => {
+          return image.images;
+        });
+        setFilesImage(...images);
+       
+      } catch (error) {
+        console.log("Found an error");
+      }
+    };
+    fetchFiles();
+  }, [load]);
+  console.log(load);
+
   const handleFolderClick = async (folder) => {
-    // console.log(folder);
+    console.log(folder);
     setOpenFolderId(folder.id);
     console.log(folder.id);
     if (folder.type !== "folder") return;
@@ -159,17 +198,22 @@ const FileManager = () => {
           },
         }
       );
+      console.log(response.data.data);
       const images = response.data.data.map((image) => {
         return image.images;
       });
       setFilesImage(...images);
       // console.log(filesImage);
       setCurrentPath((prevpath) => [...prevpath, folder.name]);
-      updateCurrentFolderContents([...getCurrentFolderContents(), currentPath]);
+      // updateCurrentFolderContents([...getCurrentFolderContents(), currentPath]);
     } catch (error) {
       console.log("Found an error");
     }
   };
+
+  useEffect(() => {
+    handleFolderClick();
+  }, [filesImage]);
 
   const handleBreadcrumbClick = (index) => {
     setCurrentPath(currentPath.slice(0, index));

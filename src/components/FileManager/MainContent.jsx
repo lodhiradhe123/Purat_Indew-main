@@ -37,7 +37,7 @@ const MainContent = ({
       fileToDelete.media_type == "image/jpeg" ||
       fileToDelete.media_type == "image/png" ||
       fileToDelete.media_type == "application/pdf" ||
-      fileToDelete.media_type == "video/mp4";
+      fileToDelete.media_type == "video/mp4"||fileToDelete.media_type == "undefined"||fileToDelete.media_type == "image"
     console.log(a);
     console.log(fileToDelete.id);
     if (a === true) {
@@ -87,16 +87,12 @@ const MainContent = ({
     // location.reload();
   };
 
-  // useEffect 
-  // useEffect(() => {
-  //   handleDeleteConfirm()
-
-  // },[filesImagefn,files])
-
   // Function to cancel the deletion operation
   const handleDeleteCancel = () => {
     setFileToDelete(null); // Reset the fileToDelete state to close the modal
   };
+
+
   // console.log(files);
   return (
     <div className="p-4">
