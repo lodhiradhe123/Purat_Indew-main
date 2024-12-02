@@ -133,6 +133,7 @@ const FileManager = () => {
   };
 
   const handleEditFile = (id) => {
+    setOpenFolderId(id);
     const fileToEdit = getCurrentFolderContents().find(
       (file) => file.id === id
     );
@@ -175,7 +176,6 @@ const FileManager = () => {
     };
     fetchFiles();
   }, [load]);
-  console.log(load);
 
   const handleFolderClick = async (folder) => {
     console.log(folder);
@@ -211,10 +211,7 @@ const FileManager = () => {
     }
   };
 
-  useEffect(() => {
-    handleFolderClick();
-  }, [filesImage]);
-
+ 
   const handleBreadcrumbClick = (index) => {
     setCurrentPath(currentPath.slice(0, index));
   };
@@ -282,7 +279,7 @@ const FileManager = () => {
 
         setFiles(transformedFiles);
         // console.log(files);
-        toast.success("Files successfully loaded!");
+        // toast.success("Files successfully loaded!");
       } catch (error) {
         console.log("Unable to get data from an api", error);
         toast.error("Failed to load Files");
@@ -339,6 +336,7 @@ const FileManager = () => {
             onClose={() => setFolderModalOpen(false)}
             onCreate={handleCreateFolder}
             folderToEdit={folderToEdit}
+            openFolderId={openFolderId}
           />
         )}
         {isFileUploadModalOpen && (
