@@ -28,6 +28,7 @@ const FileManager = () => {
   const handleSearch = (e) => {
     // Implement search logic here
   };
+ 
 
   const handleNewFolder = () => {
     setFolderToEdit(null); // Ensure no folder is being edited
@@ -134,6 +135,7 @@ const FileManager = () => {
 
   const handleEditFile = (id) => {
     setOpenFolderId(id);
+    console.log(id);
     const fileToEdit = getCurrentFolderContents().find(
       (file) => file.id === id
     );
@@ -214,6 +216,8 @@ const FileManager = () => {
  
   const handleBreadcrumbClick = (index) => {
     setCurrentPath(currentPath.slice(0, index));
+    setOpenFolderId(null)
+    
   };
 
   const getCurrentFolderContents = () => {

@@ -16,6 +16,7 @@ const MainContent = ({
   onEditFile,
   refrshFolder,
   updateCurrentFolderContents,
+ 
 }) => {
   const [fileToDelete, setFileToDelete] = useState(null); // State to track the file selected for deletion
   console.log(files);
